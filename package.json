@@ -1,0 +1,26 @@
+{
+  "name": "basic-express-server",
+  "version": "1.0.0",
+  "description": "Basic server/application using Express.js Framework",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoseCrz/Basic-Express-Server.git"
+  },
+  "keywords": [
+    "node",
+    "express.js",
+    "js",
+    "javascript",
+    "framework"
+  ],
+  "author": "Jose Cuevas <josecueram@gmail.com> (https://twitter.com/Jose_Crz)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JoseCrz/Basic-Express-Server/issues"
+  },
+  "homepage": "https://github.com/JoseCrz/Basic-Express-Server#readme"
+}

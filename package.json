@@ -26,5 +26,8 @@
   "homepage": "https://github.com/JoseCrz/Basic-Express-Server#readme",
   "devDependencies": {
     "nodemon": "^1.18.5"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
   }
 }

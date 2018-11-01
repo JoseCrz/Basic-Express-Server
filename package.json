@@ -4,7 +4,8 @@
   "description": "Basic server/application using Express.js Framework",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/JoseCrz/Basic-Express-Server/issues"
   },
-  "homepage": "https://github.com/JoseCrz/Basic-Express-Server#readme"
+  "homepage": "https://github.com/JoseCrz/Basic-Express-Server#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.5"
+  }
 }

@@ -10,7 +10,7 @@ const router = express.Router()
 
 router.get('/', (request, response, next) => {
     console.log(`The admin data recieved in shop.js is: `, adminData.products)
-    response.sendFile(path.join(pathHelper, 'views', 'shop.html'))
+    response.render('shop')
 })
 
 module.exports = router

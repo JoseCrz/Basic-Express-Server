@@ -10,7 +10,7 @@ const router = express.Router()
 
 router.get('/add-product', (request, response, next) => {
     console.log(`add product middleware`)
-    response.sendFile(path.join(pathHelper, 'views', 'add-product.html'))
+    response.render('add-product')
 })
 
 router.post('/add-product', (request, response, next) => {

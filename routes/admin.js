@@ -4,6 +4,8 @@ const express = require('express')
 
 const pathHelper = require('../utilities/pathHelper')
 
+const products = []
+
 const router = express.Router()
 
 router.get('/add-product', (request, response, next) => {
@@ -12,9 +14,12 @@ router.get('/add-product', (request, response, next) => {
 })
 
 router.post('/add-product', (request, response, next) => {
-    console.log(request.body)
+    products.push({ title: request.body.title})
     response.redirect('/')
 })
 
-module.exports = router
+exports.routes = router
+exports.products = products
+
+
 

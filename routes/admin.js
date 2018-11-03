@@ -10,7 +10,7 @@ const router = express.Router()
 
 router.get('/add-product', (request, response, next) => {
     console.log(`add product middleware`)
-    response.render('add-product')
+    response.render('add-product', { path: '/admin/add-product'})
 })
 
 router.post('/add-product', (request, response, next) => {

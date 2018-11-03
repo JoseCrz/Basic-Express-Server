@@ -1,37 +1,27 @@
-<!DOCTYPE html>
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        meta(http-equiv="X-UA-Compatible", content="ie=edge")
-        title #{pageTitle}
-        link(rel="stylesheet", href="/css/main.css")
-        link(rel="stylesheet", href="/css/product.css")
-    body
-        header.main-header
-            nav.main-header_nav
-                ul.main-header_item-list
-                    li.main-header_item
-                        a.active(href='/') Shop
-                    li.main-header_item
-                        a(href='/admin/add-product') Add Product
-        main
-            if catalog.length > 0
-                h1 My products
-                .grid
-                    each product in catalog
-                        article.card.product-item
-                            header.card_header
-                                h1.product_title #{product.title}
-                            .card_image
-                                img(src="https://images-na.ssl-images-amazon.com/images/I/91MEVIjA-UL._SX569_.jpg", alt="Game")
-                            .card_content
-                                h2.product_price $39.99
-                                p.product_description Videogame made for Nintendo 3DS
-                            .card_actions
-                                button.btn Add to cart
-            else
-                h1 No products yet.
+extends layouts/main-layout.pug
+
+block head
+    title #{pageTitle}
+    link(rel="stylesheet", href="/css/product.css")
+
+block content
+    main
+        if catalog.length > 0
+            h1 My products
+            .grid
+                each product in catalog
+                    article.card.product-item
+                        header.card_header
+                            h1.product_title #{product.title}
+                        .card_image
+                            img(src="https://images-na.ssl-images-amazon.com/images/I/91MEVIjA-UL._SX569_.jpg", alt="Game")
+                        .card_content
+                            h2.product_price $39.99
+                            p.product_description Videogame made for Nintendo 3DS
+                        .card_actions
+                            button.btn Add to cart
+        else
+            h1 No products yet.
             
 
 

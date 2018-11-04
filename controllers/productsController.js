@@ -1,4 +1,4 @@
-const products = []
+const Product = require('../models/productModel')
 
 exports.getAddProduct = (request, response, next) => {
     console.log(`add product middleware`)
@@ -6,11 +6,13 @@ exports.getAddProduct = (request, response, next) => {
 }
 
 exports.postAddProduct = (request, response, next) => {
-    products.push({ title: request.body.title})
+    const product = new Product(request.body.title)
+    product.save()
     response.redirect('/')
 }
 
 exports.getProducts = (request, response, next) => {
+    const products = Product.fetchAll()
     console.log(`The admin data recieved in shop.js is: `, products)
     response.render('shop', { catalog: products, pageTitle: 'Welcome to the shop', path: '/' })
 }

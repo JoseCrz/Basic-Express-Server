@@ -1,8 +1,4 @@
-const path = require('path')
-
 const express = require('express')
-
-const pathHelper = require('../utilities/pathHelper')
 
 const adminData = require('../routes/admin')
 

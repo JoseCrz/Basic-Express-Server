@@ -20,16 +20,16 @@ module.exports = class Product {
             })
             
         })
-        products.push(this)
+        // this was an error -> products.push(this)
     }
 
-    static fetchAll () {
+    static fetchAll (callback) {
         const filePath = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json')
         fs.readFile(filePath, (error, fileContent) => {
             if (error) {
-                return []
+                callback([])
             }
-            return JSON.parse(fileContent)
+            callback(JSON.parse(fileContent))
         })
     }
 }

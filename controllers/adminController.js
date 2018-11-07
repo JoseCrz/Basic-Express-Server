@@ -13,8 +13,8 @@ exports.postAddProduct = (request, response, next) => {
 
 exports.getProducts = (request, response, next) => {
     Product.fetchAll((products) => {
-        console.log(`The admin data recieved in shop.js is: `, products)
-        response.render('shop/product-list.ejs', { catalog: products, pageTitle: 'Welcome to the shop', path: '/' })
-
+        console.log(`The admin data recieved in admin/products is:  `, products)
+        response.render('admin/products.ejs', { catalog: products, pageTitle: 'Admin Products', path: '/admin/products' })
+    
     })
 }

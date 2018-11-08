@@ -9,6 +9,7 @@
     -webkit-box-shadow: -5px 5px 5px 0px rgba(36,55,67,0.1);
     -moz-box-shadow: -5px 5px 5px 0px rgba(36,55,67,0.1);
     box-shadow: -5px 5px 5px 0px rgba(36,55,67,0.1);
+    display: block;
 }
 
 .form-control {

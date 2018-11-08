@@ -21,6 +21,10 @@ exports.getCart = (request, response, next) => {
     response.render('shop/cart.ejs', {pageTitle: 'Cart', path: '/cart'})
 }
 
+exports.getOrders = (request, response, next) => {
+    response.render('shop/orders.ejs', {pageTitle: 'Orders', path: '/orders'} )
+}
+
 exports.getCheckout = (request, response, next) => {
     response.render('shop/checkout.ejs', {pageTitle: 'Checkout', path: '/checkout'})
 }

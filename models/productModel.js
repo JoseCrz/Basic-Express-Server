@@ -10,6 +10,7 @@ module.exports = class Product {
     }
 
     save () {
+        this.id = (Math.floor((Math.random()) * 1000000)).toString()
         const filePath = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json')
         fs.readFile(filePath, (error, fileContent) => {
             let products = []

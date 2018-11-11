@@ -17,6 +17,12 @@ exports.getProducts = (request, response, next) => {
     })
 }
 
+exports.getSpecificProduct = (request, response, next) => {
+    const productId = request.params.productId
+    console.log(productId)
+    response.redirect('/')
+}
+
 exports.getCart = (request, response, next) => {
     response.render('shop/cart.ejs', {pageTitle: 'Cart', path: '/cart'})
 }

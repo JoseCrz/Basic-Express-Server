@@ -21,9 +21,7 @@
                             <p class="product_description"><%= product.description %></p>
                         </div>
                         <div class="card_actions">
-                            <form action="/add-to-cart" method="POSR">
-                                <button class="btn">Add to cart</button>
-                            </form>
+                            <%- include('../includes/cart-button', { product: product }) %>
                         </div>
                     </article>
                 <% })%>

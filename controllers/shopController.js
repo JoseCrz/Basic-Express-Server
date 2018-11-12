@@ -28,6 +28,12 @@ exports.getCart = (request, response, next) => {
     response.render('shop/cart.ejs', {pageTitle: 'Cart', path: '/cart'})
 }
 
+exports.postCart = (request, response, next) => {
+    const productId = request.body.productId
+    console.log(productId)
+    response.redirect('/cart')
+}
+
 exports.getOrders = (request, response, next) => {
     response.render('shop/orders.ejs', {pageTitle: 'Orders', path: '/orders'} )
 }

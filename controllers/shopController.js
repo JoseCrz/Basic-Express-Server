@@ -20,9 +20,8 @@ exports.getProducts = (request, response, next) => {
 exports.getSpecificProduct = (request, response, next) => {
     const productId = request.params.productId
     Product.findById(productId, product => {
-        console.log("Product: ", product)
+        response.render('shop/product-detail.ejs', {product:product, pageTitle: product.title, path: '/products' })
     })
-    response.redirect('/')
 }
 
 exports.getCart = (request, response, next) => {

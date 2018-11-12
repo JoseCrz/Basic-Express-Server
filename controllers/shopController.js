@@ -2,7 +2,7 @@ const Product = require('../models/productModel')
 
 exports.getIndex = (request, response, next) => {
     Product.fetchAll((products) => {
-        console.log(`The admin data recieved in the index is:  `, products)
+        //console.log(`The admin data recieved in the index is:  `, products)
         response.render('shop/index.ejs', { catalog: products, pageTitle: 'Welcome to the shop', path: '/' })
     
     })
@@ -11,7 +11,7 @@ exports.getIndex = (request, response, next) => {
 
 exports.getProducts = (request, response, next) => {
     Product.fetchAll((products) => {
-        console.log(`The admin data recieved in shop.js is: `, products)
+        //console.log(`The admin data recieved in shop.js is: `, products)
         response.render('shop/product-list.ejs', { catalog: products, pageTitle: 'All products', path: '/products' })
 
     })
@@ -19,7 +19,9 @@ exports.getProducts = (request, response, next) => {
 
 exports.getSpecificProduct = (request, response, next) => {
     const productId = request.params.productId
-    console.log(productId)
+    Product.findById(productId, product => {
+        console.log("Product: ", product)
+    })
     response.redirect('/')
 }
 

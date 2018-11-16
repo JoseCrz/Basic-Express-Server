@@ -2,7 +2,11 @@ const Product = require('../models/productModel')
 
 exports.getAddProduct = (request, response, next) => {
     //console.log(`add product middleware`)
-    response.render('admin/product', { path: '/admin/add-product', pageTitle: 'Add a Product'})
+    response.render('admin/product', { 
+        path: '/admin/add-product', 
+        pageTitle: 'Add a Product',
+        editing: false
+    })
 }
 
 exports.postAddProduct = (request, response, next) => {
@@ -29,5 +33,16 @@ exports.getEditProduct = (request, response, next) => {
     if(!editMode) {
        return response.redirect('/')
     }
-    response.render('admin/product', {path: null, pageTitle: 'Edit a Product', editing: editMode})
+    const productId = request.params.productId
+    Product.findById(productId, product => {
+        if (!product) {
+            return response.redirect('/')
+        }
+        response.render('admin/product', { 
+            path: null, 
+            pageTitle: 'Edit a Product', 
+            editing: editMode,
+            product: product
+        })
+    })
 }

@@ -46,3 +46,7 @@ exports.getEditProduct = (request, response, next) => {
         })
     })
 }
+
+exports.postEditProduct = (request, response, next) => {
+    
+}

@@ -36,4 +36,27 @@ module.exports = class Cart {
             })
         })
     }
+    
+    static deleteProduct(id, productPrice) {
+         //to delete a product from the cart first we have to get the cart (read the file)
+         fs.readFile(filePath, (error, fileContent) => {
+             if (error) {
+                 console.log(error)
+                 return
+             }
+             
+             const updatedCart = {...JSON.parse(fileContent)}
+             const product = updatedCart.products.find(product => product.id === id)
+             const productQuantity = product.quantity
+             //To remove the specific product from our file, we're going to simply filter the array to get the elements
+             //that do not match the one we one to delete, so we get an array with all the products but the one to delete
+             updatedCart.products = updatedCart.products.filter(product => product.id !== id)
+             updatedCart.totalPrice -= (productPrice * productQuantity)
+
+             //Now that we have our cart without the product we wanted to deleted, we just have to save it into our file
+             fs.writeFile(filePath, JSON.stringify(updatedCart), err => {
+                 console.log(error)
+             })
+         })
+    }
 }

@@ -63,4 +63,6 @@ exports.postEditProduct = (request, response, next) => {
 
 exports.postDeleteProduct = (request, response, next) => {
     const productId = request.body.productId
+    Product.deleteById(productId)
+    response.redirect('/admin/products')
 }

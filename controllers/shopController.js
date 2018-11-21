@@ -26,7 +26,22 @@ exports.getSpecificProduct = (request, response, next) => {
 }
 
 exports.getCart = (request, response, next) => {
-    response.render('shop/cart.ejs', {pageTitle: 'Cart', path: '/cart'})
+    Cart.getCart(cart => {
+        Product.fetchAll(products => {
+            const cartProducts = []
+            for (product of products) {
+                const cartProductData = cart.products.find(prod => prod.id === product.id)
+                if (cartProductData) {
+                    cartProducts.push({productData: product, quantity: cartProductData.quantity})
+                }
+            }
+            response.render('shop/cart.ejs', {
+                path: '/cart',
+                pageTitle: 'Your cart',
+                products: cartProducts
+            })
+        })
+    })
 }
 
 exports.postCart = (request, response, next) => {

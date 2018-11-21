@@ -47,6 +47,9 @@ module.exports = class Cart {
              
              const updatedCart = {...JSON.parse(fileContent)}
              const product = updatedCart.products.find(product => product.id === id)
+             if (!product) {
+                 return
+             }
              const productQuantity = product.quantity
              //To remove the specific product from our file, we're going to simply filter the array to get the elements
              //that do not match the one we one to delete, so we get an array with all the products but the one to delete

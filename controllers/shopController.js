@@ -48,8 +48,16 @@ exports.postCart = (request, response, next) => {
     const productId = request.body.productId
     Product.findById(productId, product => {
         Cart.addProduct(productId, product.price)
+        response.redirect('/cart')
     })
-    response.redirect('/cart')
+}
+
+exports.postCartDeleteProduct = (request, response, next) => {
+    const productId = request.body.productId
+    Product.findById(productId, product => {
+        Cart.deleteProduct(productId, product.price)
+        response.redirect('cart')
+    })
 }
 
 exports.getOrders = (request, response, next) => {

@@ -2,20 +2,26 @@ const Product = require('../models/productModel')
 const Cart = require('../models/cartModel')
 
 exports.getIndex = (request, response, next) => {
-    Product.fetchAll((products) => {
-        //console.log(`The admin data recieved in the index is:  `, products)
-        response.render('shop/index.ejs', { catalog: products, pageTitle: 'Welcome to the shop', path: '/' })
+    Product.fetchAll()
+        .then(([rows, fieldData]) => {
+            console.log(rows)
+            response.render('shop/index.ejs', { catalog: rows, pageTitle: 'Welcome to the shop', path: '/' })
+        })
+        .catch(error => {
+            console.log(error)
+        })
     
-    })
-
 }
 
 exports.getProducts = (request, response, next) => {
-    Product.fetchAll((products) => {
-        //console.log(`The admin data recieved in shop.js is: `, products)
-        response.render('shop/product-list.ejs', { catalog: products, pageTitle: 'All products', path: '/products' })
-
-    })
+    Product.fetchAll()
+        .then(([rows, fieldData]) => {
+            console.log(rows)
+            response.render('shop/product-list.ejs', { catalog: rows, pageTitle: 'All products', path: '/products' })
+        })
+        .catch(error => {
+            console.log(error)
+        })
 }
 
 exports.getSpecificProduct = (request, response, next) => {

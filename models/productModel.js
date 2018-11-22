@@ -1,19 +1,6 @@
-const fs = require('fs')
-const path = require('path')
+const database = require('../util/databaseConnection')
 const Cart = require('./cartModel')
 
-const filePath = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json')
-
-const getProductsFromFile = callback => {
-    fs.readFile(filePath, (error, fileContent) => {
-        if (error) {
-            callback([])
-        } else {
-            callback(JSON.parse(fileContent))
-        }
-    })
-
-}
 
 module.exports = class Product {
     constructor(id, title, imageUrl, price, description) {
@@ -27,47 +14,19 @@ module.exports = class Product {
     //the save method has 2 modes
     //save a whole new product and updating an existing product
     save () {
-        getProductsFromFile(products => {
-            //if we already have an ID it means the product already exist, so we enter update mode
-            if (this.id) {
-                const existingProductIndex = products.findIndex(product => product.id === this.id)
-                const updatedProducts = [...products]
-                updatedProducts[existingProductIndex] = this
-                fs.writeFile(filePath, JSON.stringify(updatedProducts), error => {
-                    console.log(error)
-                })
-                //if there's no ID, it means we're going to save a whole new product
-            } else {
-                this.id = (Math.floor((Math.random()) * 1000000)).toString()
-                products.push(this)
-                fs.writeFile(filePath, JSON.stringify(products), error => {
-                    console.log(error)
-                })
-            }
-        })
+        
     }
 
     static deleteById (id) {
-        getProductsFromFile(products => {
-            const product = products.find(product => product.id === id)
-            const updatedProducts = products.filter( product => product.id !== id)
-            fs.writeFile(filePath, JSON.stringify(updatedProducts), error => {
-                if (!error) {
-                    Cart.deleteProduct(id, product.price)
-                }
-            })
-        })
- 
+        
     }
 
-    static fetchAll (callback) {
-        getProductsFromFile(callback)
+    static fetchAll () {
+        //this method is going to give us a promise which we're going to return
+        return database.execute('SELECT * FROM products')
     }
 
-    static findById (id, callback) {
-        getProductsFromFile( products => {
-            const product = products.find( p => p.id === id)
-            callback(product)
-        })
+    static findById (id) {
+        
     }
 }

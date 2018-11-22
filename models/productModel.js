@@ -14,6 +14,8 @@ module.exports = class Product {
     //the save method has 2 modes
     //save a whole new product and updating an existing product
     save () {
+        return database.execute('INSERT INTO products (title, price, imageUrl, description) VALUES (?, ?, ?, ?)',
+        [this.title, this.price, this.imageUrl, this.description])
         
     }
 

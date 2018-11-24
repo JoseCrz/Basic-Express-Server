@@ -45,17 +45,22 @@ exports.getEditProduct = (request, response, next) => {
        return response.redirect('/')
     }
     const productId = request.params.productId
-    Product.findById(productId, product => {
-        if (!product) {
-            return response.redirect('/')
-        }
-        response.render('admin/product', { 
-            path: null, 
-            pageTitle: 'Edit a Product', 
-            editing: editMode,
-            product: product
+    Product.findByPk(productId)
+        .then(product => {
+            if (!product) {
+                return response.redirect('/')
+            }
+            response.render('admin/product', { 
+                path: null, 
+                pageTitle: 'Edit a Product', 
+                editing: editMode,
+                product: product
+            })
+
         })
-    })
+        .catch(error => {
+            console.log(error)
+        })
 }
 
 exports.postEditProduct = (request, response, next) => {
@@ -65,10 +70,22 @@ exports.postEditProduct = (request, response, next) => {
     const updatedPrice = request.body.price
     const updatedDescription = request.body.description
 
-    const updatedProduct = new Product (productId, updatedTitle, updatedImageUrl, updatedPrice, updatedDescription)
+    Product.findByPk(productId)
+        .then(product => {
+            product.title = updatedTitle
+            product.imageUrl = updatedImageUrl
+            product.price = updatedPrice
+            product.description = updatedDescription
 
-    updatedProduct.save()
-    response.redirect('/admin/products')
+            return product.save()
+        })
+        .then(result => {
+            console.log('Product updated')
+            response.redirect('/admin/products')
+        })
+        .catch(error => {
+            console.log(error)
+        })
 
 }
 

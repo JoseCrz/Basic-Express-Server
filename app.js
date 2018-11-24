@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const adminRoutes = require('./routes/admin')
 const shopRoutes = require('./routes/shop')
 const errorsController = require('./controllers/errorsController')
-const database = require('./util/databaseConnection')
+const sequelize = require('./util/databaseConnection')
 
 const app = express()
 
@@ -21,4 +21,13 @@ app.use(shopRoutes)
 
 app.use(errorsController.get404)
 
-app.listen(3000)
+//code that syncs to the database and creates tables in case they don't exist yet
+sequelize.sync()
+    .then(result => {
+        app.listen(3000)
+    })
+    .catch(error => {
+        console.log(error)
+    })
+
+

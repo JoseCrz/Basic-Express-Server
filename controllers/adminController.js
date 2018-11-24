@@ -15,22 +15,28 @@ exports.postAddProduct = (request, response, next) => {
     const price = request.body.price
     const description = request.body.description
     
-    const product = new Product(null, title, imageUrl, price, description)
-    product.save()
-        .then(() => {
-            response.redirect('/')
-        })
-        .catch(error => {
-            console.log(error)
-        })
+    Product.create({
+        title: title,
+        price: price,
+        imageUrl: imageUrl,
+        description: description
+    }).then(result => {
+        //console.log(result)
+        console.log('Product inserted in the database')
+        response.redirect('/')
+    }).catch(error => {
+        console.log(error)
+    })
 }
 
 exports.getProducts = (request, response, next) => {
-    Product.fetchAll((products) => {
-        //console.log(`The admin data recieved in admin/products is:  `, products)
-        response.render('admin/products.ejs', { catalog: products, pageTitle: 'Admin Products', path: '/admin/products' })
-    
-    })
+    Product.findAll()
+        .then(products => {
+            response.render('admin/products.ejs', { catalog: products, pageTitle: 'Admin Products', path: '/admin/products' })
+        })
+        .catch(erorr => {
+            console.log(error)
+        })
 }
 
 exports.getEditProduct = (request, response, next) => {

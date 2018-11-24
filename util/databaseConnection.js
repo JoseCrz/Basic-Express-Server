@@ -1,12 +1,9 @@
-const mysql = require('mysql2')
+const Sequelize = require('sequelize')
 
-//A connection pool is going to help us to manage multiple connections a queries to the database
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    database: 'shop',
-    password: 'AajKiRaat09'
+const sequelize = new Sequelize('shop', 'root', 'AajKiRaat09', {
+    dialect: 'mysql',
+    host: 'localhost'
 })
 
-module.exports = pool.promise()
+module.exports = sequelize
 

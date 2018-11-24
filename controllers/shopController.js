@@ -23,12 +23,11 @@ exports.getProducts = (request, response, next) => {
 
 exports.getSpecificProduct = (request, response, next) => {
     const productId = request.params.productId
-    Product.findById(productId)
-        .then(([product]) => {
-            
-            response.render('shop/product-detail.ejs', {product:product[0], pageTitle: product.title, path: '/products' })
+    Product.findByPk(productId)
+        .then(product => {
+            response.render('shop/product-detail.ejs', {product:product, pageTitle: product.title, path: '/products' })
         })
-        .catch((error) => {
+        .catch(error => {
             console.log(error)
         })
 }

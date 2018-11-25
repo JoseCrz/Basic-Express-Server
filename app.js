@@ -8,6 +8,9 @@ const shopRoutes = require('./routes/shop')
 const errorsController = require('./controllers/errorsController')
 const sequelize = require('./util/databaseConnection')
 
+const Product = require('./models/productModel')
+const User = require('./models/userModel')
+
 const app = express()
 
 app.set('view engine', 'ejs')
@@ -20,6 +23,10 @@ app.use('/admin',adminRoutes)
 app.use(shopRoutes)
 
 app.use(errorsController.get404)
+
+//Defining relations between tables
+Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'})
+User.hasMany(Product)
 
 //code that syncs to the database and creates tables in case they don't exist yet
 sequelize.sync()

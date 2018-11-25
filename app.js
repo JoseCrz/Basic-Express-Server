@@ -19,6 +19,18 @@ app.set('views', 'views')
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(path.join(__dirname, 'public')))
 
+//middleware tha will allow us to add the dummy user to every request by default
+app.use((request, response, next) => {
+    User.findByPk(1)
+        .then(user => {
+            request.user = user
+            next()
+        })
+        .catch(error => {
+            console.log(error)
+        })
+})
+
 app.use('/admin',adminRoutes)
 app.use(shopRoutes)
 
@@ -30,7 +42,20 @@ User.hasMany(Product)
 
 //code that syncs to the database and creates tables in case they don't exist yet
 sequelize.sync()
+    //The following code helps us to create a dummy user in case it doesn't already exists
     .then(result => {
+        return User.findByPk(1)
+        
+    })
+    .then(user => {
+        if (!user) {
+            return User.create({name: 'Tester', email: 'test@test.com'})
+        }
+
+        return user
+    })
+    .then(user => {
+        console.log(user)
         app.listen(3000)
     })
     .catch(error => {

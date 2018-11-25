@@ -14,13 +14,13 @@ exports.postAddProduct = (request, response, next) => {
     const imageUrl = request.body.imageUrl
     const price = request.body.price
     const description = request.body.description
-    
-    Product.create({
+    request.user.createProduct({
         title: title,
         price: price,
         imageUrl: imageUrl,
         description: description
-    }).then(result => {
+    })
+    .then(result => {
         //console.log(result)
         console.log('Product inserted in the database')
         response.redirect('/')

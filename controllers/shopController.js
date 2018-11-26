@@ -33,22 +33,22 @@ exports.getSpecificProduct = (request, response, next) => {
 }
 
 exports.getCart = (request, response, next) => {
-    Cart.getCart(cart => {
-        Product.fetchAll(products => {
-            const cartProducts = []
-            for (product of products) {
-                const cartProductData = cart.products.find(prod => prod.id === product.id)
-                if (cartProductData) {
-                    cartProducts.push({productData: product, quantity: cartProductData.quantity})
-                }
-            }
+    request.user.getCart()
+        .then(cart => {
+            return cart.getProducts()
+        })
+        .then(products => {
             response.render('shop/cart.ejs', {
                 path: '/cart',
                 pageTitle: 'Your cart',
-                products: cartProducts
+                products: products
             })
+            
         })
-    })
+        .catch(error => {
+            console.log(error)
+        })
+    
 }
 
 exports.postCart = (request, response, next) => {

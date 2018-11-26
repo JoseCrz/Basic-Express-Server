@@ -49,6 +49,7 @@ Cart.belongsToMany(Product, { through: CartItem})
 Product.belongsToMany(Cart, {through: CartItem})
 
 //code that syncs to the database and creates tables in case they don't exist yet
+//sequelize.sync({force: true})
 sequelize.sync()
     //The following code helps us to create a dummy user in case it doesn't already exists
     .then(result => {
@@ -64,7 +65,11 @@ sequelize.sync()
     })
     .then(user => {
         //console.log(user)
+        return user.createCart()
+    })
+    .then(cart => {
         app.listen(3000)
+
     })
     .catch(error => {
         console.log(error)

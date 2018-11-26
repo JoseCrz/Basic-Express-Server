@@ -10,6 +10,8 @@ const sequelize = require('./util/databaseConnection')
 
 const Product = require('./models/productModel')
 const User = require('./models/userModel')
+const Cart = require('./models/cartModel')
+const CartItem = require('./models/cart-itemModel')
 
 const app = express()
 
@@ -36,9 +38,15 @@ app.use(shopRoutes)
 
 app.use(errorsController.get404)
 
-//Defining relations between tables
+//Defining relations between tables (models)
 Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'})
 User.hasMany(Product)
+
+User.hasOne(Cart)
+Cart.belongsTo(User)
+//n:m relation
+Cart.belongsToMany(Product, { through: CartItem})
+Product.belongsToMany(Cart, {through: CartItem})
 
 //code that syncs to the database and creates tables in case they don't exist yet
 sequelize.sync()
@@ -55,7 +63,7 @@ sequelize.sync()
         return user
     })
     .then(user => {
-        console.log(user)
+        //console.log(user)
         app.listen(3000)
     })
     .catch(error => {

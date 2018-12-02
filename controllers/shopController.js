@@ -19,7 +19,7 @@ exports.getProducts = (request, response, next) => {
         .catch(error => {
             console.log(error)
         })
-    }
+}
 
 exports.getSpecificProduct = (request, response, next) => {
     const productId = request.params.productId
@@ -53,10 +53,40 @@ exports.getCart = (request, response, next) => {
 
 exports.postCart = (request, response, next) => {
     const productId = request.body.productId
-    Product.findById(productId, product => {
-        Cart.addProduct(productId, product.price)
-        response.redirect('/cart')
-    })
+    let fetchedCart
+    //first we have to get the cart
+    request.user.getCart()
+        .then(cart => {
+            fetchedCart = cart
+            //then we need to see if the product we want to add is already in the cart
+            //we're going to fetch the products in the cart where the id of thev product is equal to the id of the product we want to add
+            return cart.getProducts({where: {id: productId}})
+        })
+        .then(products => {
+            //once we fetch the products we're going to get an array of products
+            let product
+            if(products.lenght > 0) {
+                product = products[0]
+            }
+            let newQuantity = 1
+            if(product) {
+                //...
+            }
+
+            return Product.findByPk(productId)
+                .then(product => {
+                    return fetchedCart.addProduct(product, {through: {quantity: newQuantity}})
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        })
+        .then(() => {
+            response.redirect('/cart')
+        })
+        .catch(error => {
+            console.log(error)
+        })
 }
 
 exports.postCartDeleteProduct = (request, response, next) => {

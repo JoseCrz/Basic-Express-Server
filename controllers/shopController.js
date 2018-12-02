@@ -54,6 +54,7 @@ exports.getCart = (request, response, next) => {
 exports.postCart = (request, response, next) => {
     const productId = request.body.productId
     let fetchedCart
+    let newQuantity = 1
     //first we have to get the cart
     request.user.getCart()
         .then(cart => {
@@ -65,21 +66,21 @@ exports.postCart = (request, response, next) => {
         .then(products => {
             //once we fetch the products we're going to get an array of products
             let product
-            if(products.lenght > 0) {
+            if(products.length > 0) {
                 product = products[0]
             }
-            let newQuantity = 1
             if(product) {
-                //...
+                const oldQuantity = product.cartItem.quantity
+                newQuantity = oldQuantity + 1
+                return product
             }
-
+            
             return Product.findByPk(productId)
-                .then(product => {
-                    return fetchedCart.addProduct(product, {through: {quantity: newQuantity}})
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+            
+        })
+        .then(product => {
+            return fetchedCart.addProduct(product, {through: {quantity: newQuantity}})
+
         })
         .then(() => {
             response.redirect('/cart')

@@ -92,10 +92,20 @@ exports.postCart = (request, response, next) => {
 
 exports.postCartDeleteProduct = (request, response, next) => {
     const productId = request.body.productId
-    Product.findById(productId, product => {
-        Cart.deleteProduct(productId, product.price)
-        response.redirect('cart')
-    })
+    request.user.getCart()
+        .then(cart => {
+            return cart.getProducts({where: {id: productId}})
+        })
+        .then(products => {
+            const product = products[0]
+            return product.cartItem.destroy()
+        })
+        .then(result => {
+            response.redirect('/cart')
+        })
+        .catch(error => {
+            console.log(error)
+        })
 }
 
 exports.getOrders = (request, response, next) => {

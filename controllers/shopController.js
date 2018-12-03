@@ -112,6 +112,32 @@ exports.getOrders = (request, response, next) => {
     response.render('shop/orders.ejs', {pageTitle: 'Orders', path: '/orders'} )
 }
 
+exports.postCreateOrder = (request, response, next) => {
+    request.user.getCart()
+        .then(cart => {
+            return cart.getProducts()
+        })
+        .then(products => {
+            return request.user.createOrder()
+            .then(order => {
+                return order.addProducts(products.map(product => {
+                    product.orderItem = {quantity: product.cartItem.quantity}
+                    return product
+                }))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+            //console.log(products)
+        })
+        .then(result => {
+            response.redirect('/orders')
+        })
+        .catch(error => {
+            console.log(error)
+        })
+}
+
 exports.getCheckout = (request, response, next) => {
     response.render('shop/checkout.ejs', {pageTitle: 'Checkout', path: '/checkout'})
 }

@@ -53,7 +53,7 @@ Product.belongsToMany(Cart, {through: CartItem})
 Order.belongsTo(User)
 User.hasMany(Order)
 Order.belongsToMany(Product, {through: OrderItem})
-Product.belongsToMany(Order, {through: OrderItem})
+
 
 //code that syncs to the database and creates tables in case they don't exist yet
 // sequelize.sync({force: true})

@@ -109,12 +109,21 @@ exports.postCartDeleteProduct = (request, response, next) => {
 }
 
 exports.getOrders = (request, response, next) => {
-    response.render('shop/orders.ejs', {pageTitle: 'Orders', path: '/orders'} )
+
+    request.user.getOrders({include: ['products']})
+        .then(orders => {
+            response.render('shop/orders.ejs', {pageTitle: 'Orders', path: '/orders', orders: orders} )
+        })
+        .catch(error => {
+            console.log(error)
+        })
 }
 
 exports.postCreateOrder = (request, response, next) => {
+    let fetchedCart
     request.user.getCart()
         .then(cart => {
+            fetchedCart = cart
             return cart.getProducts()
         })
         .then(products => {
@@ -129,6 +138,9 @@ exports.postCreateOrder = (request, response, next) => {
                 console.log(error)
             })
             //console.log(products)
+        })
+        .then(result => {
+            return fetchedCart.setProducts(null)
         })
         .then(result => {
             response.redirect('/orders')

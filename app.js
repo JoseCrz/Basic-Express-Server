@@ -7,7 +7,7 @@ const adminRoutes = require('./routes/admin')
 // const shopRoutes = require('./routes/shop')
 const errorsController = require('./controllers/errorsController')
 
-const mongoConnect = require('./util/databaseConnection')
+const mongoConnect = require('./util/databaseConnection').mongoConnect
 
 const app = express()
 
@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 //middleware tha will allow us to add the dummy user to every request by default
 app.use((request, response, next) => {
-    
+    next()
 })
 
 app.use('/admin',adminRoutes)

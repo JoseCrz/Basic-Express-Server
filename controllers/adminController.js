@@ -14,19 +14,15 @@ exports.postAddProduct = (request, response, next) => {
     const imageUrl = request.body.imageUrl
     const price = request.body.price
     const description = request.body.description
-    request.user.createProduct({
-        title: title,
-        price: price,
-        imageUrl: imageUrl,
-        description: description
-    })
-    .then(result => {
-        //console.log(result)
-        console.log('Product inserted in the database')
-        response.redirect('/')
-    }).catch(error => {
-        console.log(error)
-    })
+    const product = new Product (title, price, description, imageUrl)
+    product.save()
+        .then(result => {
+            //console.log(result)
+            console.log('Product inserted in the database')
+            response.redirect('/')
+        }).catch(error => {
+            console.log(error)
+        })
 }
 
 exports.getProducts = (request, response, next) => {

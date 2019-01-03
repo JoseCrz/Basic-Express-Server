@@ -1,5 +1,6 @@
 const Product = require('../models/productModel')
 
+
 exports.getAddProduct = (request, response, next) => {
     //console.log(`add product middleware`)
     response.render('admin/product', { 
@@ -35,55 +36,46 @@ exports.getProducts = (request, response, next) => {
         })
 }
 
-// exports.getEditProduct = (request, response, next) => {
-//     const editMode = request.query.edit
-//     if(!editMode) {
-//        return response.redirect('/')
-//     }
-//     const productId = request.params.productId
-//     Product.findByPk(productId)
-//         .then(product => {
-//             if (!product) {
-//                 return response.redirect('/')
-//             }
-//             response.render('admin/product', { 
-//                 path: null, 
-//                 pageTitle: 'Edit a Product', 
-//                 editing: editMode,
-//                 product: product
-//             })
+exports.getEditProduct = (request, response, next) => {
+    const editMode = request.query.edit
+    if(!editMode) {
+       return response.redirect('/')
+    }
+    const productId = request.params.productId
+    Product.findById(productId)
+        .then(product => {
+            if (!product) {
+                return response.redirect('/')
+            }
+            response.render('admin/product', { 
+                path: null, 
+                pageTitle: 'Edit a Product', 
+                editing: editMode,
+                product: product
+            })
 
-//         })
-//         .catch(error => {
-//             console.log(error)
-//         })
-// }
+        })
+        .catch(error => {
+            console.log(error)
+        })
+}
 
-// exports.postEditProduct = (request, response, next) => {
-//     const productId = request.body.productId
-//     const updatedTitle = request.body.title
-//     const updatedImageUrl = request.body.imageUrl
-//     const updatedPrice = request.body.price
-//     const updatedDescription = request.body.description
+exports.postEditProduct = (request, response, next) => {
+    const productId = request.body.productId
+    const updatedTitle = request.body.title
+    const updatedImageUrl = request.body.imageUrl
+    const updatedPrice = request.body.price
+    const updatedDescription = request.body.description
 
-//     Product.findByPk(productId)
-//         .then(product => {
-//             product.title = updatedTitle
-//             product.imageUrl = updatedImageUrl
-//             product.price = updatedPrice
-//             product.description = updatedDescription
-
-//             return product.save()
-//         })
-//         .then(result => {
-//             console.log('Product updated')
-//             response.redirect('/admin/products')
-//         })
-//         .catch(error => {
-//             console.log(error)
-//         })
-
-// }
+    const product = new Product(updatedTitle, updatedPrice, updatedDescription, updatedImageUrl, productId, productId)
+        product.save().then(result => {
+            console.log('Product updated')
+            response.redirect('/admin/products')
+        })
+        .catch(error => {
+            console.log(error)
+        })
+}
 
 // exports.postDeleteProduct = (request, response, next) => {
 //     const productId = request.body.productId

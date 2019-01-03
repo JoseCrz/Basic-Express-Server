@@ -26,7 +26,7 @@ exports.postAddProduct = (request, response, next) => {
 }
 
 exports.getProducts = (request, response, next) => {
-    Product.findAll()
+    Product.fetchAll()
         .then(products => {
             response.render('admin/products.ejs', { catalog: products, pageTitle: 'Admin Products', path: '/admin/products' })
         })

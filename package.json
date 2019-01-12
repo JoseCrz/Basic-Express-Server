@@ -24,9 +24,7 @@
     "url": "https://github.com/JoseCrz/Basic-Express-Server/issues"
   },
   "homepage": "https://github.com/JoseCrz/Basic-Express-Server#readme",
-  "devDependencies": {
-    "nodemon": "^1.18.5"
-  },
+  "devDependencies": {},
   "dependencies": {
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
